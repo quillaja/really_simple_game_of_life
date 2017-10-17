@@ -1,4 +1,7 @@
-# as seen on https://www.youtube.com/watch?v=o9pEzgHorH0 @ 19:30
+# A simple implementation of Conway's Game of Life
+# as seen on https://www.youtube.com/watch?v=o9pEzgHorH0 @ 19:30.
+# The game itself is `advance()` and `neighbors()`. Other methods
+# are for display.
 
 import itertools
 import time
@@ -19,8 +22,13 @@ def neighbors(point: (int, int)) -> (int, int):
 
 def advance(board: set) -> set:
     '''Returns new set representing the next state of the `board`'''
+
     next_board = set()
+
+    # all points to examine, live ones + their neighbors
     recalc = board | set(itertools.chain(*map(neighbors, board)))
+
+    # build next board iteration
     for point in recalc:
         count = sum((neigh in board) for neigh in neighbors(point))
         if count == 3 or (count == 2 and point in board):
@@ -31,25 +39,28 @@ def advance(board: set) -> set:
 
 def show(board: set) -> None:
     '''display a grid of the board'''
-    get = lambda i, p: p[i]
-    get_x = lambda p: get(0, p)
-    get_y = lambda p: get(1, p)
 
+    # get board sizes
     high = max(itertools.chain(*board))
     low = min(itertools.chain(*board))
 
+    # draw board, plus 1 char 'margin' on each side
     for y in range(low - 1, high + 2):
         for x in range(low - 1, high + 2):
             if (x, y) in board:
                 print('#', end='')
             else:
                 print('.', end='')
-        print(' {}'.format(y))
+        print(' {}'.format(y))  # display the y-coord on end of line
 
     print('')  # blank line
 
 
 def animate(board: set, iterations: int, pause: float=0.5) -> None:
+    '''Run through some `iterations` of `board`, printing the board to
+    screen each time and pausing `pause` seconds before advancing.
+    Does not modify `board`.'''
+
     b = board.copy()
     for i in range(iterations):
         show(b)
