@@ -42,15 +42,18 @@ def show(board: set) -> None:
 
     # get board sizes
     high = max(itertools.chain(*board))
-    low = min(itertools.chain(*board))
+    low =  min(itertools.chain(*board))
 
     # draw board, plus 1 char 'margin' on each side
+    print('\033[2J\033[0;0H', end='') # clear screen & move cursor to 0,0
+
+    print('low: {} high: {}'.format(low,high))
     for y in range(low - 1, high + 2):
         for x in range(low - 1, high + 2):
             if (x, y) in board:
-                print('#', end='')
+                print(u'\u2588', end='')
             else:
-                print('.', end='')
+                print(u'\u2591', end='')
         print(' {}'.format(y))  # display the y-coord on end of line
 
     print('')  # blank line
@@ -68,7 +71,31 @@ def animate(board: set, iterations: int, pause: float=0.5) -> None:
         time.sleep(pause)
 
 
+def cls():
+    print('\033[2J')
+
+
 GLIDER = {(0, 0), (1, 0), (2, 0), (0, 1), (1, 2)}
 TWO_BY_TWO = {(1, 0), (2, 0), (1, 1), (2, 1)}
 BLINKER = {(0, 1), (1, 1), (2, 1)}
 TOAD = {(1, 0), (2, 0), (3, 0), (0, 1), (1, 1), (2, 1)}
+
+RPENTOMINO={
+          (1,0),(2,0),
+    (0,1),(1,1),
+          (1,2)
+}
+
+ACORN = {
+        (1,0),
+                     (3,1),
+    (0,2),(1,2),           (4,2),(5,2),(6,2)
+}
+
+FIVE_BY_FIVE = {
+    (0,0),(1,0),(2,0),      (4,0),
+    (0,1),
+                      (3,2),(4,2),
+          (1,3),(2,3),      (4,3),
+    (0,4),      (2,4),      (4,4)
+}
