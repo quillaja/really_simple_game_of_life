@@ -47,9 +47,8 @@ def show(board: set) -> None:
 
     # draw board, plus 1 char 'margin' on each side
     print('\033[2J\033[0;0H', end='') # clear screen & move cursor to 0,0
-    print('low: {} high: {}'.format(low, high))
 
-    output = str() # faster than multiple calls to print
+    output = '' # faster than multiple calls to print
     for y in range(y_low - 1, y_high + 2):
         for x in range(x_low - 1, x_high + 2):
             if (x, y) in board:
@@ -61,7 +60,7 @@ def show(board: set) -> None:
     print(output)  # show output at once w/ blank line
 
 
-def animate(board: set, iterations: int, pause: float=0.5) -> None:
+def animate(board: set, iterations: int, pause: float = 0.5) -> None:
     '''Run through some `iterations` of `board`, printing the board to
     screen each time and pausing `pause` seconds before advancing.
     Does not modify `board`.'''
