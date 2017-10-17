@@ -46,17 +46,18 @@ def show(board: set) -> None:
 
     # draw board, plus 1 char 'margin' on each side
     print('\033[2J\033[0;0H', end='') # clear screen & move cursor to 0,0
+    print('low: {} high: {}'.format(low, high))
 
-    print('low: {} high: {}'.format(low,high))
+    output = str() # faster than multiple calls to print
     for y in range(low - 1, high + 2):
         for x in range(low - 1, high + 2):
             if (x, y) in board:
-                print(u'\u2588', end='')
+                output += '\u2588'
             else:
-                print(u'\u2591', end='')
-        print(' {}'.format(y))  # display the y-coord on end of line
+                output += '\u2591'
+        output += ' {}\n'.format(y)  # display the y-coord on end of line
 
-    print('')  # blank line
+    print(output)  # show output at once w/ blank line
 
 
 def animate(board: set, iterations: int, pause: float=0.5) -> None:
