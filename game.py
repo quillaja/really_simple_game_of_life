@@ -29,3 +29,4 @@ def advance(board: set) -> set:
 
 
 INITIAL_GLIDER = {(0, 0), (1, 0), (2, 0), (0, 1), (1, 2)}
+TWO_X_TWO = {(1, 0), (2, 0), (1, 1), (2, 1)}
