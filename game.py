@@ -41,16 +41,17 @@ def show(board: set) -> None:
     '''display a grid of the board'''
 
     # get board sizes
-    high = max(itertools.chain(*board))
-    low =  min(itertools.chain(*board))
+    xs, ys = zip(*board)
+    x_high, x_low = max(xs), min(xs)
+    y_high, y_low = max(ys), min(ys)
 
     # draw board, plus 1 char 'margin' on each side
     print('\033[2J\033[0;0H', end='') # clear screen & move cursor to 0,0
     print('low: {} high: {}'.format(low, high))
 
     output = str() # faster than multiple calls to print
-    for y in range(low - 1, high + 2):
-        for x in range(low - 1, high + 2):
+    for y in range(y_low - 1, y_high + 2):
+        for x in range(x_low - 1, x_high + 2):
             if (x, y) in board:
                 output += '\u2588'
             else:
@@ -66,7 +67,7 @@ def animate(board: set, iterations: int, pause: float=0.5) -> None:
     Does not modify `board`.'''
 
     b = board.copy()
-    for i in range(iterations):
+    for _ in range(iterations):
         show(b)
         b = advance(b)
         time.sleep(pause)
